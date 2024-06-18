@@ -1245,3 +1245,4 @@ function Library:Window(options)
 end
 
 return Library
+MainGui.close.bind(p)
