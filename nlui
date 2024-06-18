@@ -56,20 +56,6 @@ local function Dragify(frame, parent)
     end)
 end
 
-
-local UserInputService = game:GetService("UserInputService")
-
--- Assuming you have already created a Library object called "lib"
-local lib = Library:Window({text = "NEVERLOSE"})
-
--- Listen for key presses
-UserInputService.InputBegan:Connect(function(input)
-    if input.KeyCode == Enum.KeyCode.P then
-        lib:Toggle()
-    end
-end)
-
-
 local function round(num, bracket)
     bracket = bracket or 1
     local a = math.floor(num/bracket + (math.sign(num) * 0.5)) * bracket
