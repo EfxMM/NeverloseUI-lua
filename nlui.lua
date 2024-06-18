@@ -1,46 +1,44 @@
 local Library = {}
 
-local NeverloseVersion = "v1.1A."
-
-local TweenService = game:GetService("TweenService")
-local input = game:GetService("UserInputService")
-
-for i,v in next, game.CoreGui:GetChildren() do
-    if v:IsA("ScreenGui") and v.Name == "Neverlose" then
-        v:Destroy() 
-    end
+-- Add ToggleGUI function to Library object
+function Library:ToggleGUI()
+    Body.Enabled = not Body.Enabled
 end
 
-local themouse = game.Players.LocalPlayer:GetMouse()
+-- Add Keybind object to TopBar frame
+local Keybind = Instance.new("TextButton")
+Keybind.Name = "Keybind"
+Keybind.Parent = TopBar
+Keybind.AnchorPoint = Vector2.new(0.5, 0.5)
+Keybind.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Keybind.BackgroundTransparency = 1.000
+Keybind.BorderSizePixel = 0
+Keybind.Position = UDim2.new(0.95, 0, 0.5, 0)
+Keybind.Size = UDim2.new(0, 36, 0, 22)
+Keybind.AutoButtonColor = false
+Keybind.Font = Enum.Font.Gotham
+Keybind.Text = ""
+Keybind.TextColor3 = Color3.fromRGB(157, 171, 182)
+Keybind.TextSize = 14.000
+Keybind.TextXAlignment = Enum.TextXAlignment.Center
+Keybind.MouseButton1Click:Connect(function()
+    Library:ToggleGUI()
+end)
 
-local function Notify(tt, tx)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = tt,
-        Text = tx,
-        Duration = 5
-    })
-end
+-- Initialize the GUI
+local options = {
+    text = "NEVERLOSE"
+}
+Library:Window(options)
 
-local function Dragify(frame, parent)
-
-    parent = parent or frame
-
-    local dragging = false
-    local dragInput, mousePos, framePos
-
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            mousePos = input.Position
-            framePos = parent.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
+-- Bind the ToggleGUI function to the "F1" key
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed then
+        if input.KeyCode == Enum.KeyCode.F1 then
+            Library:ToggleGUI()
         end
-    end)
+    end
+end)
 
     frame.InputChanged:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseMovement then
